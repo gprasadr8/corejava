@@ -83,3 +83,7 @@ class loader for DNSNameService: sun.misc.Launcher$ExtClassLoader@7c354093
 class loader for this class: sun.misc.Launcher$AppClassLoader@64cbbe37
 sun.misc.Launcher$AppClassLoader@64cbbe37
 ```
+
+**Context ClassLoader:**
+
+The Java 2 platform also introduced the notion of context class loader. A thread's context class loader is, by default, set to the context class loader of the thread's parent. The hierarchy of threads is rooted at the primordial thread (the one that runs the program). The context class loader of the primordial thread is set to the class loader that loaded the application. So unless you explicitly change the thread's context class loader, its context class loader will be the application's class loader. That is, the context class loader can load the classes that the application can load. This loader is used by the Java runtime such as the RMI (Java Remote Method Invocation) to load classes and resources on behalf of the user application. The context class loader, like any Java 2 platform class loader, has a parent class loader and supports the same delegation model for class loading described previously.

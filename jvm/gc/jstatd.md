@@ -38,6 +38,8 @@ This example demonstrates starting jstatd with RMI logging capabilities enabled.
 
 In our application we have created one script file by adding above all the configurations then directly running script.
 
+
+instead of adding jstatd.all.policy and running command add below sript into sh file then directly run sh file.
 ```
 #!/bin/sh
 policy=${HOME}/.jstatd.all.policy
