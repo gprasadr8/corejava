@@ -14,7 +14,7 @@ First part, the census on live objects, is implemented in all collectors with th
 Every modern GC algorithm used in JVM starts its job with finding out all objects that are still alive. 
 This concept is best explained using the following picture representing your JVM’s memory layout:
 
-![Marking Reachable Objects](file:///marking_process.png)
+![Marking Reachable Objects](marking_process.png)
 
 First, GC defines some specific objects as Garbage Collection Roots. Examples of such GC roots are:
 	1. Local variable and input parameters of the currently executing methods
@@ -59,7 +59,7 @@ The approach requires using the so called **free-list recording** of every free 
 Built into this approach is another weakness – there may exist plenty of free regions but if no single region is large enough to accommodate the allocation, the allocation is still going to fail (with an OutOfMemoryError in Java).
 
 
-![Sweep Phase before and after](file:///sweep_phase_before_after.png)
+![Sweep Phase before and after](sweep_phase_before_after.png)
 
 
 2. **Compact:**
@@ -70,7 +70,7 @@ The downside of this approach is an increased GC pause duration as we need to co
 
 The benefits to Mark and Sweep are also visible – after such a compacting operation new object allocation is again extremely cheap via pointer bumping. Using such approach the location of the free space is always known and no fragmentation issues are triggered either.
 
-![Compact Phase before and after](file:///compact_phase_before_after.png)
+![Compact Phase before and after](compact_phase_before_after.png)
 
 
 3. **Copy:**
@@ -84,7 +84,7 @@ Mark and Copy approach has some advantages as copying can occur simultaneously w
 The disadvantage is the need for one more memory region, which should be large enough to
 accommodate survived objects.
 
-![Copy Phase before and after](file:///copy_phase_before_after.png)
+![Copy Phase before and after](copy_phase_before_after.png)
 
 ### Types of GC Algorithms:
 
@@ -100,18 +100,18 @@ The most used and practical combination of algorithms for young and old generati
 - Parallel New for Young + Concurrent Mark and Sweep (CMS) for the Old Generation
 - G1 in case of which the generations are not separated between the Young and Old
 
-	|--------------------| ---------------- | --------------------------------------------|
-	|	Young            |  Tenured         |  JVM options                                |
-	|--------------------| -----------------| --------------------------------------------|
-	| Serial 			 |	Serial 			|	-XX:+UseSerialGC                          |
-	|					 |					|                                             |
+	
+	|	Young        |    Tenured       |              JVM options                        |
+	|--------------------| -----------------| --------------------------------------------    |
+	| Serial 	     |	 Serial 	|	-XX:+UseSerialGC                          |
+	|	             |			|                                                 |
 	| Parallel Scavenge  |  Parallel Old 	|	-XX:+UseParallelGC -XX:+UseParallelOldGC  |
-	|					 |                  |                                             |
-	| Parallel New 		 |	CMS 			|	-XX:+UseParNewGC -XX:+UseConcMarkSweepGC  |
-	|				     |                  |                                             |
-	| G1 				 |					|	-XX:+UseG1GC                              |
-	|					 |                  |                                             |
-	|--------------------| -----------------| --------------------------------------------| 
+	|		     |                  |                                                 |
+	| Parallel New       |	 CMS 		|	-XX:+UseParNewGC -XX:+UseConcMarkSweepGC  |
+	|		     |                  |                                                 |
+	| G1    	     |			|	-XX:+UseG1GC                              |
+	|                    |                  |                                                 | 
+	
 
 
 ### 1. Serial GC:	
