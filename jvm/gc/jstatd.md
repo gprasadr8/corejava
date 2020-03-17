@@ -34,24 +34,36 @@ For sites with more restrictive security practices, it is possible to use a cust
 **Enabling RMI logging capabilities.**
 This example demonstrates starting jstatd with RMI logging capabilities enabled. This technique is useful as a troubleshooting aid or for monitoring server activities.
 
-`jstatd -p 2020 -J-Djava.security.policy=all.policy -J-Djava.rmi.server.logCalls=true`
+`jstatd -p 2020 -J-Djava.security.policy=jstatd.all.policy -J-Djava.rmi.server.logCalls=true`
 
-In our application we have created one script file by adding above all the configurations then directly running script.
-
-
-instead of adding jstatd.all.policy and running command add below sript into sh file then directly run sh file.
+create `jstatd.all.policy` file with below code
 ```
-#!/bin/sh
-policy=${HOME}/.jstatd.all.policy
-[ -r ${policy} ] || cat >${policy} <<'POLICY'
 grant codebase "file:${java.home}/../lib/tools.jar" {
   permission java.security.AllPermission;
 };
-POLICY
 
-jstatd -J-Djava.rmi.server.hostname=remotehostname/ip -J-Djava.security.policy=${policy} &
 ```
 
+then start running it by using below command 
+   `jstatd -J-Djava.rmi.server.hostname=remotehostname/ip -J-Djava.security.policy=/path/to/jstatd.all.policy` 
+ once we run, it will start jstatd in 1099 default port.
+ 
+ OR
+ 
+instead of adding jstatd.all.policy and running command add below sript into sh file then directly run sh file.
+
+ ```
+#!/bin/sh
+policy=${HOME}/.jstatd.all.policy
+[ -r ${policy} ] || cat >${policy} <<'POLICY'
+ grant codebase "file:${java.home}/../lib/tools.jar" {
+   permission java.security.AllPermission;
+ };
+POLICY
+ 
+jstatd -J-Djava.rmi.server.hostname=remotehostname/ip -J-Djava.security.policy=${policy} &
+ ```
+ 
 the above script saved into jstatd_run.sh once we run it will start jstatd in 1099 default port.
 
 To check running process based on port in linux command: `ss -lptn 'sport = :1099'`

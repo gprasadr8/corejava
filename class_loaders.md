@@ -34,7 +34,7 @@ Also, these Java classes aren't loaded into memory all at once, but when require
 1. **Delegation Model:** The Java Virtual Machine and the Java ClassLoader use an algorithm called the Delegation Hierarchy Algorithm to Load the classes into the Java file.
 The ClassLoader works based on a set of operations given by the delegation model. They are:
 		
-	![ClassLoader Delegation Model](java_classloader_delegation.png)
+	![ClassLoader Delegation Model](java_classloader_delegation_1.png)
 	
 	- ClassLoader always follows the Delegation Hierarchy Principle.
 	- Whenever JVM comes across a class, it checks whether that class is already loaded or not.
@@ -83,6 +83,7 @@ class loader for DNSNameService: sun.misc.Launcher$ExtClassLoader@7c354093
 class loader for this class: sun.misc.Launcher$AppClassLoader@64cbbe37
 sun.misc.Launcher$AppClassLoader@64cbbe37
 ```
+
 
 **Context ClassLoader:**
 
